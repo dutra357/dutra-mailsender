@@ -1,6 +1,6 @@
 package com.dutra.mailsender.dtos;
 
-public class emailDto {
+public class EmailDto {
 
     private String fromEmail;
     private String fromName;
@@ -10,8 +10,8 @@ public class emailDto {
     private String body;
     private String contentType;
 
-    public emailDto() {}
-    public emailDto(String fromEmail, String fromName,
+    public EmailDto() {}
+    public EmailDto(String fromEmail, String fromName,
                     String replyTo, String to, String subject,
                     String body, String contentType) {
         this.fromEmail = fromEmail;
