@@ -1,6 +1,8 @@
 package com.dutra.mailsender.services;
 
 import com.dutra.mailsender.dtos.EmailDto;
+import com.dutra.mailsender.services.exception.EmailException;
+import com.dutra.mailsender.services.interfaces.EmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -8,22 +10,17 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class EmailService {
+public class SendGridEmailService implements EmailService {
+    @Autowired
+    private SendGrid sendGrid;
 
-    private final SendGrid sendGrid;
-    public EmailService(SendGrid sendGrid) {
-        this.sendGrid = sendGrid;
-    }
-
+    @Override
     public void sendEmail(EmailDto emailDto) {
         Email from = new Email(emailDto.getFromEmail(), emailDto.getFromName());
         Email to = new Email(emailDto.getTo());
@@ -45,12 +42,14 @@ public class EmailService {
 
             if (response.getStatusCode() > 400 && response.getStatusCode() < 500) {
                 System.out.println("Error sending e-mail: " + response.getBody());
-            } else {
-                System.out.println("Email sended! Status: " + response.getStatusCode());
+                throw new EmailException(response.getBody());
+
             }
 
+            System.out.println("Email sended! Status: " + response.getStatusCode());
+
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new EmailException(e.getMessage());
         }
     }
 }

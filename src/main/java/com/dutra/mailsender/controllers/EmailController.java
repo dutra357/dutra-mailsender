@@ -1,7 +1,7 @@
 package com.dutra.mailsender.controllers;
 
 import com.dutra.mailsender.dtos.EmailDto;
-import com.dutra.mailsender.services.EmailService;
+import com.dutra.mailsender.services.interfaces.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
