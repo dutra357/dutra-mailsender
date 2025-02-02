@@ -1,7 +1,5 @@
 package com.dutra.mailsender.controllers;
 
-import com.dutra.mailsender.dtos.FileDto;
-import com.dutra.mailsender.dtos.S3Dto;
 import com.dutra.mailsender.dtos.UriDto;
 import com.dutra.mailsender.services.S3Service;
 import org.springframework.http.ResponseEntity;
